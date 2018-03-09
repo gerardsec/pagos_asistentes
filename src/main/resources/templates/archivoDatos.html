@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="layout :: site-head">
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="Content-Type" content="text/html"></meta>
+    <title>Agrega Inventario</title>
+</head>
+<body>
+<header th:replace="layout :: site-header"/>
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+<div>
+    <form method="POST" enctype="multipart/form-data" action="/envio/archivoDatos">
+        <table>
+            <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+            <tr><td></td><td><input type="submit" value="Archivo" name="datos" /></td></tr>
+        </table>
+    </form>
+</div>
+<div>
+    <!--
+    <ul>
+        <li th:each="file : ${files}">
+            <a th:href="${file}" th:text="${file}" />
+        </li>
+    </ul>
+    -->
+</div>
+<footer th:replace="layout :: site-footer"/>
+</body>
+</html>
