@@ -1,10 +1,8 @@
 package uam.admision.pagos.Model;
 
 import com.opencsv.bean.CsvBindByName;
-
-
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+
 
 
 public class PagosEntrada {
@@ -12,7 +10,8 @@ public class PagosEntrada {
     @CsvBindByName
     private String personal_cl;
     @CsvBindByName
-    private Timestamp pago_fe;
+   
+    private String pago_fe;
     @CsvBindByName
     private String u_version;
     @CsvBindByName
@@ -28,9 +27,11 @@ public class PagosEntrada {
     @CsvBindByName
     private Integer per_pago_cl;
     @CsvBindByName
-    private Timestamp ini_pago_fe;
+    
+    private String ini_pago_fe;
     @CsvBindByName
-    private Timestamp fin_pago_fe;
+  
+    private String fin_pago_fe;
     @CsvBindByName
     private String ape_pat_xx;
     @CsvBindByName
@@ -42,9 +43,11 @@ public class PagosEntrada {
     @CsvBindByName
     private String personal_m_no;
     @CsvBindByName
-    private Timestamp jornada_min;
+   
+    private String jornada_min;
     @CsvBindByName
-    private Timestamp jornada_max;
+ 
+    private String jornada_max;
     @CsvBindByName
     private Integer plaza_cl1;
     @CsvBindByName
@@ -71,12 +74,12 @@ public class PagosEntrada {
     public void setPersonal_cl(String personal_cl) {
         this.personal_cl = personal_cl;
     }
-
-    public Timestamp getPago_fe() {
+  
+    public String getPago_fe() {
         return pago_fe;
     }
 
-    public void setPago_fe(Timestamp pago_fe) {
+    public void setPago_fe(String pago_fe) {
         this.pago_fe = pago_fe;
     }
 
@@ -135,20 +138,20 @@ public class PagosEntrada {
     public void setPer_pago_cl(Integer per_pago_cl) {
         this.per_pago_cl = per_pago_cl;
     }
-
-    public Timestamp getIni_pago_fe() {
+  
+    public String getIni_pago_fe() {
         return ini_pago_fe;
     }
 
-    public void setIni_pago_fe(Timestamp ini_pago_fe) {
+    public void setIni_pago_fe(String ini_pago_fe) {
         this.ini_pago_fe = ini_pago_fe;
     }
-
-    public Timestamp getFin_pago_fe() {
+  
+    public String getFin_pago_fe() {
         return fin_pago_fe;
     }
 
-    public void setFin_pago_fe(Timestamp fin_pago_fe) {
+    public void setFin_pago_fe(String fin_pago_fe) {
         this.fin_pago_fe = fin_pago_fe;
     }
 
@@ -191,20 +194,20 @@ public class PagosEntrada {
     public void setContable_nu(Integer contable_nu) {
         this.contable_nu = contable_nu;
     }
-
-    public Timestamp getJornada_min() {
+ 
+    public String getJornada_min() {
         return jornada_min;
     }
 
-    public void setJornada_min(Timestamp jornada_min) {
+    public void setJornada_min(String jornada_min) {
         this.jornada_min = jornada_min;
     }
-
-    public Timestamp getJornada_max() {
+  
+    public String getJornada_max() {
         return jornada_max;
     }
 
-    public void setJornada_max(Timestamp jornada_max) {
+    public void setJornada_max(String jornada_max) {
         this.jornada_max = jornada_max;
     }
 

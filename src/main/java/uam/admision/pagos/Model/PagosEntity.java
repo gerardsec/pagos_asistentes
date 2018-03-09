@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-@Entity
-@Table(name = "pagos", schema = "controlpagos", catalog = "")
+//@Entity
+//@Table(name = "pagos", schema = "controlpagos", catalog = "")
 public class PagosEntity {
     private Integer idPagos;
     private String personalCl;

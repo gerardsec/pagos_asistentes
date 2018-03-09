@@ -23,7 +23,8 @@ import java.util.List;
 public class PagosEntradaController {
 
     private static final Logger log = LoggerFactory.getLogger(PagosEntradaController.class);
-    private static String UPLOADED_FOLDER = "/Users/uamadm01/Data/files_sendmail/";
+    //private static String UPLOADED_FOLDER = "/Users/uamadm01/Data/files_sendmail/";
+    private static String UPLOADED_FOLDER = "/Users/gerardsec/Documents/temporales/files_sendmail";
     String fileName;
 
     @RequestMapping(value = "/envio/archivoDatos")
@@ -63,7 +64,7 @@ public class PagosEntradaController {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        List<PagosEntrada> listaCorreo = new CsvToBeanBuilder(fileReader).withType(PagosEntrada.class).build().parse();
+        List<PagosEntrada> listaCorreo = new CsvToBeanBuilder(fileReader).withType(PagosEntrada.class).withSeparator('\t').build().parse();
         //Muestra de datos
         log.warn("Registros leídos:"+listaCorreo.size());
         for (int i = 0; i < listaCorreo.size() && i < 10; i++) {
