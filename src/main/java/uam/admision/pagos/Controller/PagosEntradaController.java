@@ -3,12 +3,14 @@ package uam.admision.pagos.Controller;
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uam.admision.pagos.Model.PagosEntrada;
+import uam.admision.pagos.Service.MapPagos;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -21,11 +23,14 @@ import java.util.List;
 
 @Controller
 public class PagosEntradaController {
-
     private static final Logger log = LoggerFactory.getLogger(PagosEntradaController.class);
-    //private static String UPLOADED_FOLDER = "/Users/uamadm01/Data/files_sendmail/";
-    private static String UPLOADED_FOLDER = "/Users/gerardsec/Documents/temporales/files_sendmail";
+    private static String UPLOADED_FOLDER = "/Users/uamadm01/Data/files_sendmail/";
+    //private static String UPLOADED_FOLDER = "/Users/gerardsec/Documents/temporales/files_sendmail";
+
     String fileName;
+
+    @Autowired
+    MapPagos mapPagos;
 
     @RequestMapping(value = "/envio/archivoDatos")
     public String archivoDatos() {
@@ -41,7 +46,6 @@ public class PagosEntradaController {
             redirectAttributes.addFlashAttribute("message", "Archivo vacío. Seleccione uno");
             return "redirect:/envio/archivoDatos";
         }
-
         try {
 
             // Get the file and save it somewhere
@@ -51,7 +55,6 @@ public class PagosEntradaController {
 
             redirectAttributes.addFlashAttribute("message",
                     "El archivo se guardó correctamente: " + file.getOriginalFilename() + "'");
-
         } catch (IOException e) {
             redirectAttributes.addFlashAttribute("message", "Error al guardar el archivo");
             e.printStackTrace();
@@ -64,13 +67,24 @@ public class PagosEntradaController {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        List<PagosEntrada> listaCorreo = new CsvToBeanBuilder(fileReader).withType(PagosEntrada.class).withSeparator('\t').build().parse();
+        List<PagosEntrada> listaPagos = new ArrayList<>();
+        listaPagos = new CsvToBeanBuilder(fileReader).withType(PagosEntrada.class).withSeparator('\t').build().parse();
+        Boolean erroresEnMap = mapPagos.mapToPagosRevisa(listaPagos);
+        if (erroresEnMap) {
+            log.error("Demasiados errores al convertir los datos");
+            //agregar MessageError
+            return "redirect:/envio/archivoDatos";
+        }
+        Boolean erroresenGuarda = mapPagos.mapToPagosGuarda(listaPagos);
+
+        /*
         //Muestra de datos
         log.warn("Registros leídos:"+listaCorreo.size());
         for (int i = 0; i < listaCorreo.size() && i < 10; i++) {
             PagosEntrada datosEntrada = listaCorreo.get(i);
             System.out.println(datosEntrada.toString());
         }
+        */
 
         return "redirect:/envio/archivoDatos";
     }

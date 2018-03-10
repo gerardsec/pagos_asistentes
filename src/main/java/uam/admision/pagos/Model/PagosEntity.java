@@ -1,31 +1,39 @@
 package uam.admision.pagos.Model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import uam.admision.pagos.Utils.LocalDateTimeConverter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Objects;
 
-//@Entity
-//@Table(name = "pagos", schema = "controlpagos", catalog = "")
+@Entity
+@Table(name = "pagos", schema = "controlpagos", catalog = "")
 public class PagosEntity {
     private Integer idPagos;
     private String personalCl;
-    private Timestamp pagoFe;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate pagoFe;
     private BigDecimal montoPagoNu;
     private Integer diasPagoNu;
     private Integer festivosNu;
     private BigDecimal horasPagoNu;
     private BigDecimal horasDobleNu;
     private Integer perPagoCl;
-    private Timestamp iniPagoFe;
-    private Timestamp finPagoFe;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate iniPagoFe;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate finPagoFe;
     private String apePatXx;
     private String apeMatXx;
     private String personalMNo;
     private String rfcXx;
     private Integer contableNu;
-    private Timestamp jornadaMin;
-    private Timestamp jornadaMax;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate jornadaMin;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate jornadaMax;
     private Integer plazaCl1;
     private Integer plazaCl2;
     private Integer categoria1;
@@ -72,11 +80,12 @@ public class PagosEntity {
 
     @Basic
     @Column(name = "pago_fe", nullable = true)
-    public Timestamp getPagoFe() {
+    @Convert(converter = LocalDateTimeConverter.class)
+    public LocalDate getPagoFe() {
         return pagoFe;
     }
 
-    public void setPagoFe(Timestamp pagoFe) {
+    public void setPagoFe(LocalDate pagoFe) {
         this.pagoFe = pagoFe;
     }
 
@@ -142,21 +151,23 @@ public class PagosEntity {
 
     @Basic
     @Column(name = "ini_pago_fe", nullable = true)
-    public Timestamp getIniPagoFe() {
+    @Convert(converter = LocalDateTimeConverter.class)
+    public LocalDate getIniPagoFe() {
         return iniPagoFe;
     }
 
-    public void setIniPagoFe(Timestamp iniPagoFe) {
+    public void setIniPagoFe(LocalDate iniPagoFe) {
         this.iniPagoFe = iniPagoFe;
     }
 
     @Basic
     @Column(name = "fin_pago_fe", nullable = true)
-    public Timestamp getFinPagoFe() {
+    @Convert(converter = LocalDateTimeConverter.class)
+    public LocalDate getFinPagoFe() {
         return finPagoFe;
     }
 
-    public void setFinPagoFe(Timestamp finPagoFe) {
+    public void setFinPagoFe(LocalDate finPagoFe) {
         this.finPagoFe = finPagoFe;
     }
 
@@ -212,21 +223,23 @@ public class PagosEntity {
 
     @Basic
     @Column(name = "jornada_min", nullable = true)
-    public Timestamp getJornadaMin() {
+    @Convert(converter = LocalDateTimeConverter.class)
+    public LocalDate getJornadaMin() {
         return jornadaMin;
     }
 
-    public void setJornadaMin(Timestamp jornadaMin) {
+    public void setJornadaMin(LocalDate jornadaMin) {
         this.jornadaMin = jornadaMin;
     }
 
     @Basic
     @Column(name = "jornada_max", nullable = true)
-    public Timestamp getJornadaMax() {
+    @Convert(converter = LocalDateTimeConverter.class)
+    public LocalDate getJornadaMax() {
         return jornadaMax;
     }
 
-    public void setJornadaMax(Timestamp jornadaMax) {
+    public void setJornadaMax(LocalDate jornadaMax) {
         this.jornadaMax = jornadaMax;
     }
 
