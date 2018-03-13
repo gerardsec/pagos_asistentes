@@ -1,5 +1,6 @@
 package uam.admision.pagos.Model;
 
+import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 import uam.admision.pagos.Utils.LocalDateTimeConverter;
 
@@ -60,6 +61,7 @@ public class PagosEntity {
 
     @Id
     @Column(name = "id_pagos", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getIdPagos() {
         return idPagos;
     }

@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import uam.admision.pagos.Model.PagosEntity;
 import uam.admision.pagos.Model.PagosEntrada;
 import uam.admision.pagos.Service.MapPagos;
+import uam.admision.pagos.Service.PagosEntityService;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -24,13 +26,15 @@ import java.util.List;
 @Controller
 public class PagosEntradaController {
     private static final Logger log = LoggerFactory.getLogger(PagosEntradaController.class);
-    private static String UPLOADED_FOLDER = "/Users/uamadm01/Data/files_sendmail/";
-    //private static String UPLOADED_FOLDER = "/Users/gerardsec/Documents/temporales/files_sendmail";
+    //private static String UPLOADED_FOLDER = "/Users/uamadm01/Data/files_sendmail/";
+    private static String UPLOADED_FOLDER = "/Users/gerardsec/Documents/temporales/files_sendmail";
 
     String fileName;
 
     @Autowired
     MapPagos mapPagos;
+
+
 
     @RequestMapping(value = "/envio/archivoDatos")
     public String archivoDatos() {
@@ -69,13 +73,22 @@ public class PagosEntradaController {
         }
         List<PagosEntrada> listaPagos = new ArrayList<>();
         listaPagos = new CsvToBeanBuilder(fileReader).withType(PagosEntrada.class).withSeparator('\t').build().parse();
-        Boolean erroresEnMap = mapPagos.mapToPagosRevisa(listaPagos);
-        if (erroresEnMap) {
+        List<PagosEntity> pagosEntityList = mapPagos.mapToPagosRevisa(listaPagos);
+        if (pagosEntityList == null) {
             log.error("Demasiados errores al convertir los datos");
+
+            redirectAttributes.addFlashAttribute("message",
+                    "ver log. Demasiados errores en formato de datos: " + file.getOriginalFilename() + "'");
             //agregar MessageError
             return "redirect:/envio/archivoDatos";
         }
-        Boolean erroresenGuarda = mapPagos.mapToPagosGuarda(listaPagos);
+        Boolean erroresenGuarda = mapPagos.mapToPagosGuarda(pagosEntityList);
+        if (erroresenGuarda == Boolean.TRUE){
+            redirectAttributes.addFlashAttribute("message",
+                    "ver log. Demasiados errores al intentar guardar los datos: " + file.getOriginalFilename() + "'");
+            //agregar MessageError
+            return "redirect:/envio/archivoDatos";
+        }
 
         /*
         //Muestra de datos
