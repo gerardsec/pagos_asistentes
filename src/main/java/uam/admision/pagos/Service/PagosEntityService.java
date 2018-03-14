@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import uam.admision.pagos.Model.PagosEntity;
+import uam.admision.pagos.Model.PagosEntityPK;
 import uam.admision.pagos.Repository.PagosEntityRepository;
 
 @Service
@@ -18,6 +19,8 @@ public class PagosEntityService {
     PagosEntityRepository pagosEntityRepository;
 
     Boolean guardaPagos(PagosEntity pagosEntity){
+
+
 
         try {
             pagosEntityRepository.save(pagosEntity);

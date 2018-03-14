@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uam.admision.pagos.Model.PagosEntity;
+import uam.admision.pagos.Model.PagosEntityPK;
 import uam.admision.pagos.Model.PagosEntrada;
 
 import java.text.ParseException;
@@ -92,8 +93,11 @@ public class MapPagos {
 
         Boolean erroresGuardar = Boolean.FALSE;
         Integer erroresNum = 0;
+        ///PagosEntityPK llavePagos = new PagosEntityPK();
 
         for (int i = 0; i < listaPagosEntity.size(); i++) {
+
+            ///llavePagos.setPagoFe();
             Boolean errorAlGuardar = pagosEntityService.guardaPagos(listaPagosEntity.get(i));
             if (errorAlGuardar == Boolean.TRUE){
                 erroresNum++;
