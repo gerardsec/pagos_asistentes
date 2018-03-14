@@ -9,6 +9,9 @@ import uam.admision.pagos.Model.PagosEntity;
 import uam.admision.pagos.Model.PagosEntityPK;
 import uam.admision.pagos.Repository.PagosEntityRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class PagosEntityService {
 
@@ -30,5 +33,17 @@ public class PagosEntityService {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
+    }
+
+    Optional<PagosEntity> buscaPorId(PagosEntityPK pagosEntityPK){
+        Optional<PagosEntity> pagosEntity;
+        try {
+            pagosEntity = pagosEntityRepository.findById(pagosEntityPK);
+        } catch (DataAccessException e) {
+            log.error("Error al buscar por llave"+pagosEntityPK.toString());
+            return null;
+        }
+        return pagosEntity;
+
     }
 }

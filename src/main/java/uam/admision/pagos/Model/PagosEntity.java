@@ -12,6 +12,9 @@ import uam.admision.pagos.Utils.LocalDateTimeConverter;
 @IdClass(PagosEntityPK.class)
 public class PagosEntity {
     private String personalCl;
+
+
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate pagoFe;
     private BigDecimal montoPagoNu;
@@ -519,6 +522,50 @@ public class PagosEntity {
                 Objects.equals(pagoGenerado, that.pagoGenerado) &&
                 Objects.equals(observaciones, that.observaciones) &&
                 Objects.equals(causaError, that.causaError);
+    }
+    @Override
+    public String toString() {
+        return "PagosEntity{" +
+                "personalCl='" + personalCl + '\'' +
+                ", pagoFe=" + pagoFe +
+                ", montoPagoNu=" + montoPagoNu +
+                ", diasPagoNu=" + diasPagoNu +
+                ", festivosNu=" + festivosNu +
+                ", horasPagoNu=" + horasPagoNu +
+                ", horasDobleNu=" + horasDobleNu +
+                ", perPagoCl=" + perPagoCl +
+                ", iniPagoFe=" + iniPagoFe +
+                ", finPagoFe=" + finPagoFe +
+                ", apePatXx='" + apePatXx + '\'' +
+                ", apeMatXx='" + apeMatXx + '\'' +
+                ", personalMNo='" + personalMNo + '\'' +
+                ", rfcXx='" + rfcXx + '\'' +
+                ", contableNu=" + contableNu +
+                ", jornadaMin=" + jornadaMin +
+                ", jornadaMax=" + jornadaMax +
+                ", plazaCl1=" + plazaCl1 +
+                ", plazaCl2=" + plazaCl2 +
+                ", categoria1=" + categoria1 +
+                ", categoria2=" + categoria2 +
+                ", puesto1='" + puesto1 + '\'' +
+                ", puesto2='" + puesto2 + '\'' +
+                ", plantel1='" + plantel1 + '\'' +
+                ", plantel2='" + plantel2 + '\'' +
+                ", diasEquivalentes=" + diasEquivalentes +
+                ", categoriaPago=" + categoriaPago +
+                ", diasPagarNu=" + diasPagarNu +
+                ", diferenciaNu=" + diferenciaNu +
+                ", extrasAutorizadas=" + extrasAutorizadas +
+                ", pagoCantDias=" + pagoCantDias +
+                ", pagoCantExtra=" + pagoCantExtra +
+                ", pagoCantTotal=" + pagoCantTotal +
+                ", generaPago=" + generaPago +
+                ", tieneRfc=" + tieneRfc +
+                ", tieneHorarios=" + tieneHorarios +
+                ", tieneRetencion=" + tieneRetencion +
+                ", pagoProcesado=" + pagoProcesado +
+                ", pagoGenerado=" + pagoGenerado +
+                '}';
     }
 
     @Override

@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -70,13 +71,14 @@ public class MapPagos {
 
         for (int i = 0; i < listaPagos.size(); i++) {
             PagosEntrada pagosEntrada = listaPagos.get(i);
-            System.out.println(pagosEntrada.toString());
+            System.out.println("Pagos entrada: " + pagosEntrada.toString());
 
             try {
                 PagosEntity pagosEntity = this.mapColumnasPagos(pagosEntrada);
+                log.warn("--Map ok: ");
                 pagosEntityList.add(pagosEntity);
-            } catch (ParseException | NullPointerException e ) {
-                log.warn("Error en línea " + (i + 1)+" Datos:"+pagosEntrada);
+            } catch (ParseException | NullPointerException e) {
+                log.warn("Error en línea " + (i + 1) + " Datos:" + pagosEntrada);
                 erroresNum++;
                 //e.printStackTrace();
                 if (erroresNum > 10) {
@@ -93,18 +95,25 @@ public class MapPagos {
 
         Boolean erroresGuardar = Boolean.FALSE;
         Integer erroresNum = 0;
-        ///PagosEntityPK llavePagos = new PagosEntityPK();
+        PagosEntityPK llavePagos = new PagosEntityPK();
 
         for (int i = 0; i < listaPagosEntity.size(); i++) {
 
-            ///llavePagos.setPagoFe();
-            Boolean errorAlGuardar = pagosEntityService.guardaPagos(listaPagosEntity.get(i));
-            if (errorAlGuardar == Boolean.TRUE){
-                erroresNum++;
-                if(erroresNum > 10) {
-                    log.error("Demasiados errores al guardar");
-                    erroresGuardar = Boolean.TRUE;
-                    return erroresGuardar;
+            log.warn("formando llave compuesta: ");
+            llavePagos.setPagoFe(listaPagosEntity.get(i).getPagoFe());
+            llavePagos.setPersonalCl(listaPagosEntity.get(i).getPersonalCl());
+            Optional<PagosEntity> pagosEntity = pagosEntityService.buscaPorId(llavePagos);
+            if (pagosEntity != null) {
+                log.warn("Registro ya existe. No se guardó: " + pagosEntity.get().toString());
+            } else {
+                Boolean errorAlGuardar = pagosEntityService.guardaPagos(listaPagosEntity.get(i));
+                if (errorAlGuardar == Boolean.TRUE) {
+                    erroresNum++;
+                    if (erroresNum > 10) {
+                        log.error("Demasiados errores al guardar");
+                        erroresGuardar = Boolean.TRUE;
+                        return erroresGuardar;
+                    }
                 }
             }
         }
