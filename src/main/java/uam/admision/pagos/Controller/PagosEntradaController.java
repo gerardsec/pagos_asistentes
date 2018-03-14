@@ -35,7 +35,6 @@ public class PagosEntradaController {
     MapPagos mapPagos;
 
 
-
     @RequestMapping(value = "/envio/archivoDatos")
     public String archivoDatos() {
         return "archivoDatos";
@@ -74,31 +73,21 @@ public class PagosEntradaController {
         List<PagosEntrada> listaPagos = new ArrayList<>();
         listaPagos = new CsvToBeanBuilder(fileReader).withType(PagosEntrada.class).withSeparator('\t').build().parse();
         List<PagosEntity> pagosEntityList = mapPagos.mapToPagosRevisa(listaPagos);
+        log.warn("regresa de pagosrevisa");
         if (pagosEntityList == null) {
             log.error("Demasiados errores al convertir los datos");
 
             redirectAttributes.addFlashAttribute("message",
                     "ver log. Demasiados errores en formato de datos: " + file.getOriginalFilename() + "'");
-            //agregar MessageError
             return "redirect:/envio/archivoDatos";
         }
         Boolean erroresenGuarda = mapPagos.mapToPagosGuarda(pagosEntityList);
-        if (erroresenGuarda == Boolean.TRUE){
+        if (erroresenGuarda == Boolean.TRUE) {
             redirectAttributes.addFlashAttribute("message",
                     "ver log. Demasiados errores al intentar guardar los datos: " + file.getOriginalFilename() + "'");
             //agregar MessageError
             return "redirect:/envio/archivoDatos";
         }
-
-        /*
-        //Muestra de datos
-        log.warn("Registros leídos:"+listaCorreo.size());
-        for (int i = 0; i < listaCorreo.size() && i < 10; i++) {
-            PagosEntrada datosEntrada = listaCorreo.get(i);
-            System.out.println(datosEntrada.toString());
-        }
-        */
-
         return "redirect:/envio/archivoDatos";
     }
 }

@@ -78,7 +78,7 @@ public class MapPagos {
                 log.warn("--Map ok: ");
                 pagosEntityList.add(pagosEntity);
             } catch (ParseException | NullPointerException e) {
-                log.warn("Error en línea " + (i + 1) + " Datos:" + pagosEntrada);
+                log.warn("** Error en línea " + (i + 1) + " Datos:" + pagosEntrada);
                 erroresNum++;
                 //e.printStackTrace();
                 if (erroresNum > 10) {
@@ -99,24 +99,62 @@ public class MapPagos {
 
         for (int i = 0; i < listaPagosEntity.size(); i++) {
 
-            log.warn("formando llave compuesta: ");
-            llavePagos.setPagoFe(listaPagosEntity.get(i).getPagoFe());
-            llavePagos.setPersonalCl(listaPagosEntity.get(i).getPersonalCl());
-            Optional<PagosEntity> pagosEntity = pagosEntityService.buscaPorId(llavePagos);
-            if (pagosEntity != null) {
-                log.warn("Registro ya existe. No se guardó: " + pagosEntity.get().toString());
+            //log.warn("formando llave compuesta, con: "+listaPagosEntity.get(i).getPagoFe()+" "+
+            //        listaPagosEntity.get(i).getPersonalCl());
+            PagosEntity pagosEntityGuardar = listaPagosEntity.get(i);
+            //log.warn("pagosEntityGuardar:" + pagosEntityGuardar.toString());
+
+            llavePagos.setPagoFe(pagosEntityGuardar.getPagoFe());
+            llavePagos.setPersonalCl(pagosEntityGuardar.getPersonalCl());
+            //log.warn("Antes dias equivalentes");
+            pagosEntityGuardar.setDiasEquivalentes(pagosEntityGuardar.getHorasPagoNu() / (float) 8);
+
+            pagosEntityGuardar.setCategoriaPago(pagosEntityGuardar.getCategoria2());
+            //log.warn("despues get cat");
+            pagosEntityGuardar.setDiasPagarNu(pagosEntityGuardar.getDiasPagoNu());
+            //log.warn("despues dias pagar nu");
+            pagosEntityGuardar.setDiferenciaNu(pagosEntityGuardar.getHorasPagoNu() - (pagosEntityGuardar.getDiasPagarNu() * (float) 8));
+            //log.warn("despues get diferencia");
+            if (pagosEntityGuardar.getExtrasAutorizadas() == null) {
+                pagosEntityGuardar.setExtrasAutorizadas((float) 0);
+            }
+            if (pagosEntityGuardar.getCategoriaPago() == 1) {
+                //log.warn("categoría 1:");
+                pagosEntityGuardar.setPagoCantDias((float) pagosEntityGuardar.getDiasPagarNu() * (float) 215);
+                //log.warn("categoría 1 pagocantdias:");
+                pagosEntityGuardar.setPagoCantExtra(pagosEntityGuardar.getExtrasAutorizadas() * ((float) 215 / (float) 8));
+                //log.warn("categoría 1: pagocantextra");
             } else {
-                Boolean errorAlGuardar = pagosEntityService.guardaPagos(listaPagosEntity.get(i));
+                if (pagosEntityGuardar.getCategoriaPago() == 2) {
+                    //log.warn("categoría 2:");
+                    pagosEntityGuardar.setPagoCantDias((float) pagosEntityGuardar.getDiasPagarNu() * (float) 250);
+                    pagosEntityGuardar.setPagoCantExtra(pagosEntityGuardar.getExtrasAutorizadas() * ((float) 250 / (float) 8));
+                } else {
+                    log.error("Categoría no definida " + pagosEntityGuardar.toString());
+                }
+            }
+            //log.warn("sale catego:");
+            pagosEntityGuardar.setPagoCantTotal(pagosEntityGuardar.getPagoCantDias() + pagosEntityGuardar.getPagoCantExtra());
+
+            //log.warn("después formar llaves");
+            Optional<PagosEntity> pagosEntity = pagosEntityService.buscaPorId(llavePagos);
+            //log.warn("Después buscar llave compuesta:"+pagosEntity);
+            if (pagosEntity.isPresent()) {
+                log.warn("** AVISO. Registro ya existe. No se guardó: " + pagosEntity.get().toString());
+                erroresNum++;
+            } else {
+                Boolean errorAlGuardar = pagosEntityService.guardaPagos(pagosEntityGuardar);
                 if (errorAlGuardar == Boolean.TRUE) {
                     erroresNum++;
-                    if (erroresNum > 10) {
-                        log.error("Demasiados errores al guardar");
-                        erroresGuardar = Boolean.TRUE;
-                        return erroresGuardar;
-                    }
                 }
+            }
+            if (erroresNum > 10) {
+                log.error("Demasiados errores al guardar revise log");
+                erroresGuardar = Boolean.TRUE;
+                return erroresGuardar;
             }
         }
         return erroresGuardar;
     }
 }
+

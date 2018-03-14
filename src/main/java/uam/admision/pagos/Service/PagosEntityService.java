@@ -21,29 +21,27 @@ public class PagosEntityService {
     @Autowired
     PagosEntityRepository pagosEntityRepository;
 
-    Boolean guardaPagos(PagosEntity pagosEntity){
-
-
-
+    Boolean guardaPagos(PagosEntity pagosEntity) {
         try {
             pagosEntityRepository.save(pagosEntity);
+            pagosEntityRepository.
+            log.warn("__ Registro guardado: "+pagosEntity.toString());
         } catch (DataAccessException e) {
-            log.error("No se pudo escribir registro:"+pagosEntity.toString());
+            log.error("** ERROR No se pudo escribir registro:" + pagosEntity.toString());
             e.printStackTrace();
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
     }
 
-    Optional<PagosEntity> buscaPorId(PagosEntityPK pagosEntityPK){
+    Optional<PagosEntity> buscaPorId(PagosEntityPK pagosEntityPK) {
         Optional<PagosEntity> pagosEntity;
         try {
             pagosEntity = pagosEntityRepository.findById(pagosEntityPK);
         } catch (DataAccessException e) {
-            log.error("Error al buscar por llave"+pagosEntityPK.toString());
+            log.error("Error al buscar por llave" + pagosEntityPK.toString());
             return null;
         }
         return pagosEntity;
-
     }
 }

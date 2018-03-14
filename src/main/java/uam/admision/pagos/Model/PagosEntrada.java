@@ -1,7 +1,7 @@
 package uam.admision.pagos.Model;
 
 import com.opencsv.bean.CsvBindByName;
-import java.math.BigDecimal;
+
 
 
 
@@ -15,15 +15,15 @@ public class PagosEntrada {
     @CsvBindByName
     private String u_version;
     @CsvBindByName
-    private BigDecimal monto_pago_nu;
+    private Float monto_pago_nu;
     @CsvBindByName
     private Integer dias_pago_nu;
     @CsvBindByName
     private Integer festivos_nu;
     @CsvBindByName
-    private BigDecimal horas_pago_nu;
+    private Float horas_pago_nu;
     @CsvBindByName
-    private BigDecimal horas_doble_nu;
+    private Float horas_doble_nu;
     @CsvBindByName
     private Integer per_pago_cl;
     @CsvBindByName
@@ -91,11 +91,11 @@ public class PagosEntrada {
         this.u_version = u_version;
     }
 
-    public BigDecimal getMonto_pago_Nu() {
+    public Float getMonto_pago_Nu() {
         return monto_pago_nu;
     }
 
-    public void setMonto_pago_Nu(BigDecimal monto_pago_Nu) {
+    public void setMonto_pago_Nu(Float monto_pago_Nu) {
         this.monto_pago_nu = monto_pago_Nu;
     }
 
@@ -115,19 +115,19 @@ public class PagosEntrada {
         this.festivos_nu = festivos_nu;
     }
 
-    public BigDecimal getHoras_pago_nu() {
+    public Float getHoras_pago_nu() {
         return horas_pago_nu;
     }
 
-    public void setHoras_pago_nu(BigDecimal horas_pago_nu) {
+    public void setHoras_pago_nu(Float horas_pago_nu) {
         this.horas_pago_nu = horas_pago_nu;
     }
 
-    public BigDecimal getHoras_doble_nu() {
+    public Float getHoras_doble_nu() {
         return horas_doble_nu;
     }
 
-    public void setHoras_doble_nu(BigDecimal horas_doble_nu) {
+    public void setHoras_doble_nu(Float horas_doble_nu) {
         this.horas_doble_nu = horas_doble_nu;
     }
 

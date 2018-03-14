@@ -1,9 +1,9 @@
 package uam.admision.pagos.Model;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import uam.admision.pagos.Utils.LocalDateTimeConverter;
 
@@ -12,16 +12,13 @@ import uam.admision.pagos.Utils.LocalDateTimeConverter;
 @IdClass(PagosEntityPK.class)
 public class PagosEntity {
     private String personalCl;
-
-
-
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate pagoFe;
-    private BigDecimal montoPagoNu;
+    private Float montoPagoNu;
     private Integer diasPagoNu;
     private Integer festivosNu;
-    private BigDecimal horasPagoNu;
-    private BigDecimal horasDobleNu;
+    private Float horasPagoNu;
+    private Float horasDobleNu;
     private Integer perPagoCl;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate iniPagoFe;
@@ -44,14 +41,14 @@ public class PagosEntity {
     private String puesto2;
     private String plantel1;
     private String plantel2;
-    private BigDecimal diasEquivalentes;
+    private Float diasEquivalentes;
     private Integer categoriaPago;
     private Integer diasPagarNu;
-    private BigDecimal diferenciaNu;
-    private BigDecimal extrasAutorizadas;
-    private BigDecimal pagoCantDias;
-    private BigDecimal pagoCantExtra;
-    private BigDecimal pagoCantTotal;
+    private Float diferenciaNu;
+    private Float extrasAutorizadas;
+    private Float pagoCantDias;
+    private Float pagoCantExtra;
+    private Float pagoCantTotal;
     private Integer generaPago;
     private Integer tieneRfc;
     private Integer tieneHorarios;
@@ -84,11 +81,11 @@ public class PagosEntity {
 
     @Basic
     @Column(name = "monto_pago_nu", nullable = true, precision = 2)
-    public BigDecimal getMontoPagoNu() {
+    public Float getMontoPagoNu() {
         return montoPagoNu;
     }
 
-    public void setMontoPagoNu(BigDecimal montoPagoNu) {
+    public void setMontoPagoNu(Float montoPagoNu) {
         this.montoPagoNu = montoPagoNu;
     }
 
@@ -114,21 +111,21 @@ public class PagosEntity {
 
     @Basic
     @Column(name = "horas_pago_nu", nullable = true, precision = 2)
-    public BigDecimal getHorasPagoNu() {
+    public Float getHorasPagoNu() {
         return horasPagoNu;
     }
 
-    public void setHorasPagoNu(BigDecimal horasPagoNu) {
+    public void setHorasPagoNu(Float horasPagoNu) {
         this.horasPagoNu = horasPagoNu;
     }
 
     @Basic
     @Column(name = "horas_doble_nu", nullable = true, precision = 2)
-    public BigDecimal getHorasDobleNu() {
+    public Float getHorasDobleNu() {
         return horasDobleNu;
     }
 
-    public void setHorasDobleNu(BigDecimal horasDobleNu) {
+    public void setHorasDobleNu(Float horasDobleNu) {
         this.horasDobleNu = horasDobleNu;
     }
 
@@ -318,11 +315,11 @@ public class PagosEntity {
 
     @Basic
     @Column(name = "dias_equivalentes", nullable = true, precision = 2)
-    public BigDecimal getDiasEquivalentes() {
+    public Float getDiasEquivalentes() {
         return diasEquivalentes;
     }
 
-    public void setDiasEquivalentes(BigDecimal diasEquivalentes) {
+    public void setDiasEquivalentes(Float diasEquivalentes) {
         this.diasEquivalentes = diasEquivalentes;
     }
 
@@ -348,51 +345,51 @@ public class PagosEntity {
 
     @Basic
     @Column(name = "diferencia_nu", nullable = true, precision = 2)
-    public BigDecimal getDiferenciaNu() {
+    public Float getDiferenciaNu() {
         return diferenciaNu;
     }
 
-    public void setDiferenciaNu(BigDecimal diferenciaNu) {
+    public void setDiferenciaNu(Float diferenciaNu) {
         this.diferenciaNu = diferenciaNu;
     }
 
     @Basic
     @Column(name = "extras_autorizadas", nullable = true, precision = 2)
-    public BigDecimal getExtrasAutorizadas() {
+    public Float getExtrasAutorizadas() {
         return extrasAutorizadas;
     }
 
-    public void setExtrasAutorizadas(BigDecimal extrasAutorizadas) {
+    public void setExtrasAutorizadas(Float extrasAutorizadas) {
         this.extrasAutorizadas = extrasAutorizadas;
     }
 
     @Basic
     @Column(name = "pago_cant_dias", nullable = true, precision = 2)
-    public BigDecimal getPagoCantDias() {
+    public Float getPagoCantDias() {
         return pagoCantDias;
     }
 
-    public void setPagoCantDias(BigDecimal pagoCantDias) {
+    public void setPagoCantDias(Float pagoCantDias) {
         this.pagoCantDias = pagoCantDias;
     }
 
     @Basic
     @Column(name = "pago_cant_extra", nullable = true, precision = 2)
-    public BigDecimal getPagoCantExtra() {
+    public Float getPagoCantExtra() {
         return pagoCantExtra;
     }
 
-    public void setPagoCantExtra(BigDecimal pagoCantExtra) {
+    public void setPagoCantExtra(Float pagoCantExtra) {
         this.pagoCantExtra = pagoCantExtra;
     }
 
     @Basic
     @Column(name = "pago_cant_total", nullable = true, precision = 2)
-    public BigDecimal getPagoCantTotal() {
+    public Float getPagoCantTotal() {
         return pagoCantTotal;
     }
 
-    public void setPagoCantTotal(BigDecimal pagoCantTotal) {
+    public void setPagoCantTotal(Float pagoCantTotal) {
         this.pagoCantTotal = pagoCantTotal;
     }
 
@@ -523,6 +520,7 @@ public class PagosEntity {
                 Objects.equals(observaciones, that.observaciones) &&
                 Objects.equals(causaError, that.causaError);
     }
+
     @Override
     public String toString() {
         return "PagosEntity{" +
