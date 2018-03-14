@@ -1,18 +1,16 @@
 package uam.admision.pagos.Model;
 
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
-import org.springframework.format.annotation.DateTimeFormat;
-import uam.admision.pagos.Utils.LocalDateTimeConverter;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
+import org.springframework.format.annotation.DateTimeFormat;
+import uam.admision.pagos.Utils.LocalDateTimeConverter;
 
 @Entity
 @Table(name = "pagos", schema = "controlpagos", catalog = "")
+@IdClass(PagosEntityPK.class)
 public class PagosEntity {
-    private Integer idPagos;
     private String personalCl;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate pagoFe;
@@ -58,19 +56,9 @@ public class PagosEntity {
     private Integer pagoProcesado;
     private Integer pagoGenerado;
     private String observaciones;
+    private String causaError;
 
     @Id
-    @Column(name = "id_pagos", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getIdPagos() {
-        return idPagos;
-    }
-
-    public void setIdPagos(Integer idPagos) {
-        this.idPagos = idPagos;
-    }
-
-    @Basic
     @Column(name = "personal_cl", nullable = false, length = 45)
     public String getPersonalCl() {
         return personalCl;
@@ -80,8 +68,8 @@ public class PagosEntity {
         this.personalCl = personalCl;
     }
 
-    @Basic
-    @Column(name = "pago_fe", nullable = true)
+    @Id
+    @Column(name = "pago_fe", nullable = false)
     @Convert(converter = LocalDateTimeConverter.class)
     public LocalDate getPagoFe() {
         return pagoFe;
@@ -475,13 +463,22 @@ public class PagosEntity {
         this.observaciones = observaciones;
     }
 
+    @Basic
+    @Column(name = "causa_error", nullable = true, length = 250)
+    public String getCausaError() {
+        return causaError;
+    }
+
+    public void setCausaError(String causaError) {
+        this.causaError = causaError;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PagosEntity that = (PagosEntity) o;
-        return Objects.equals(idPagos, that.idPagos) &&
-                Objects.equals(personalCl, that.personalCl) &&
+        return Objects.equals(personalCl, that.personalCl) &&
                 Objects.equals(pagoFe, that.pagoFe) &&
                 Objects.equals(montoPagoNu, that.montoPagoNu) &&
                 Objects.equals(diasPagoNu, that.diasPagoNu) &&
@@ -520,13 +517,13 @@ public class PagosEntity {
                 Objects.equals(tieneRetencion, that.tieneRetencion) &&
                 Objects.equals(pagoProcesado, that.pagoProcesado) &&
                 Objects.equals(pagoGenerado, that.pagoGenerado) &&
-                Objects.equals(observaciones, that.observaciones);
+                Objects.equals(observaciones, that.observaciones) &&
+                Objects.equals(causaError, that.causaError);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idPagos, personalCl, pagoFe, montoPagoNu, diasPagoNu, festivosNu, horasPagoNu, horasDobleNu, perPagoCl, iniPagoFe, finPagoFe, apePatXx, apeMatXx, personalMNo, rfcXx, contableNu, jornadaMin, jornadaMax, plazaCl1, plazaCl2, categoria1, categoria2, puesto1, puesto2, plantel1, plantel2, diasEquivalentes, categoriaPago, diasPagarNu, diferenciaNu, extrasAutorizadas, pagoCantDias, pagoCantExtra, pagoCantTotal, generaPago, tieneRfc, tieneHorarios, tieneRetencion, pagoProcesado, pagoGenerado, observaciones);
+        return Objects.hash(personalCl, pagoFe, montoPagoNu, diasPagoNu, festivosNu, horasPagoNu, horasDobleNu, perPagoCl, iniPagoFe, finPagoFe, apePatXx, apeMatXx, personalMNo, rfcXx, contableNu, jornadaMin, jornadaMax, plazaCl1, plazaCl2, categoria1, categoria2, puesto1, puesto2, plantel1, plantel2, diasEquivalentes, categoriaPago, diasPagarNu, diferenciaNu, extrasAutorizadas, pagoCantDias, pagoCantExtra, pagoCantTotal, generaPago, tieneRfc, tieneHorarios, tieneRetencion, pagoProcesado, pagoGenerado, observaciones, causaError);
     }
 }
-
