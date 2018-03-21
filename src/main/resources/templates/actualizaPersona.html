@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="layout :: site-head">
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="Content-Type" content="text/html"></meta>
+    <title>Actualiza datos Pagos</title>
+</head>
+<body>
+<header th:replace="layout :: site-header"/>
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+<div>
+    <form action="#" th:action="@{/documentos/registra}"  th:object="${pagosEntity}" method="post">
+        <table>
+            <tr>
+                <td>Fecha de corte:</td>
+                <td><input type="date" th:field="*{pagoFe}" required/></td>
+                <td>
+                    <p th:if="${#fields.hasErrors('pagoFe')}" th:errors="*{pagoFe}">Error en fecha</p>
+                </td>
+            </tr>
+            <tr>
+                <td>Clave o Matrícula:</td>
+                <td><input type="number" min = "1" max="2999999999" th:field="*{personalCl}" required/></td>
+                <td>
+                    <p th:if="${#fields.hasErrors('personalCl')}" th:errors="*{personalCl}">Clave incorrecta</p>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Buscar" name="buscarClave"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div>
+<form action="#" th:action="@{/documentos/actualiza}" th:object="${pagosEntityEncontrado}" method="post">
+    <span th:text="${pagosEntityEncontrado.personalCl}">personalCl</span><br/>
+    <span th:text="${pagosEntityEncontrado.pagoFe}">pagoFe</span><br/>
+    <span th:text="${pagosEntityEncontrado.personalMNo}">nombre</span><br/>
+    <span th:text="${pagosEntityEncontrado.apePatXx}">paterno</span><br/>
+    <span th:text="${pagosEntityEncontrado.apeMatXx}">materno</span><br/>
+    <span th:text="${pagosEntityEncontrado.rfcXx}">rfc</span><br/>
+    <span th:text="${pagosEntityEncontrado.contableNu}">numero contable</span><br/>
+    <input type="text" th:field="${pagosEntityEncontrado.generaPago}"/><br/>
+    <input type="text" th:field="${pagosEntityEncontrado.tieneRfc}"/><br/>
+    <input type="text" th:field="${pagosEntityEncontrado.tieneHorarios}"/><br/>
+    <input type="text" th:field="${pagosEntityEncontrado.tieneRetencion}"/><br/>
+    <input type="text" th:field="${pagosEntityEncontrado.pagoProcesado}"/><br/>
+    <p><textarea th:field="${pagosEntityEncontrado.observaciones}" placeholder="Observaciones"></textarea></p><br/>
+    <input type="submit" name="actualizaDatos" value="Actualizar"/>
+
+</form>
+</div>
+<footer th:replace="layout :: site-footer"/>
+</body>
+</html>

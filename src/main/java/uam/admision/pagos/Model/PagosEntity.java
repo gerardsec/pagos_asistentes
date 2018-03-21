@@ -1,6 +1,10 @@
 package uam.admision.pagos.Model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -60,6 +64,7 @@ public class PagosEntity {
 
     @Id
     @Column(name = "personal_cl", nullable = false, length = 45)
+    @Size(min = 1,max = 10, message = "Longitud entre 1 y 10")
     public String getPersonalCl() {
         return personalCl;
     }
@@ -71,6 +76,7 @@ public class PagosEntity {
     @Id
     @Column(name = "pago_fe", nullable = false)
     @Convert(converter = LocalDateTimeConverter.class)
+    @PastOrPresent
     public LocalDate getPagoFe() {
         return pagoFe;
     }
