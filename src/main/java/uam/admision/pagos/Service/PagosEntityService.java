@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import uam.admision.pagos.Model.PagosEntity;
 import uam.admision.pagos.Model.PagosEntityPK;
 import uam.admision.pagos.Repository.PagosEntityRepository;
@@ -43,5 +45,24 @@ public class PagosEntityService {
             return null;
         }
         return pagosEntity;
+    }
+    @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = PagosEntityTransactionException.class)
+    public Boolean actualizaPagos(PagosEntity pagosEntity) throws PagosEntityTransactionException {
+        PagosEntityPK pagosEntityPK = new PagosEntityPK();
+        pagosEntityPK.setPersonalCl(pagosEntity.getPersonalCl());
+        pagosEntityPK.setPagoFe(pagosEntity.getPagoFe());
+        Optional<PagosEntity> pagosEntityOptional = this.buscaPorId(pagosEntityPK);
+        if (!pagosEntityOptional.isPresent()) {
+            return Boolean.FALSE;
+        }
+        PagosEntity pagosEntityActualizar = pagosEntityOptional.get();
+        pagosEntityActualizar.setGeneraPago(pagosEntity.getGeneraPago());
+        pagosEntityActualizar.setTieneRfc(pagosEntity.getTieneRfc());
+        pagosEntityActualizar.setTieneHorarios(pagosEntity.getTieneHorarios());
+        pagosEntityActualizar.setTieneRetencion(pagosEntity.getTieneRetencion());
+        pagosEntityActualizar.setPagoProcesado(pagosEntity.getPagoProcesado());
+        pagosEntityActualizar.setObservaciones(pagosEntity.getObservaciones());
+        return Boolean.TRUE;
+
     }
 }

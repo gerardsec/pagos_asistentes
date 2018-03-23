@@ -11,7 +11,7 @@
     <h2 th:text="${message}"/>
 </div>
 <div>
-    <form action="#" th:action="@{/documentos/registra}"  th:object="${pagosEntity}" method="post">
+    <form action="#" th:action="@{/documentos/registra}" th:object="${pagosEntity}" method="post">
         <table>
             <tr>
                 <td>Fecha de corte:</td>
@@ -22,36 +22,33 @@
             </tr>
             <tr>
                 <td>Clave o Matrícula:</td>
-                <td><input type="number" min = "1" max="2999999999" th:field="*{personalCl}" required/></td>
+                <td><input type="number" min="1" max="2999999999" th:field="*{personalCl}" required/></td>
                 <td>
                     <p th:if="${#fields.hasErrors('personalCl')}" th:errors="*{personalCl}">Clave incorrecta</p>
                 </td>
             </tr>
             <tr>
                 <td></td>
-                <td><input type="submit" value="Buscar" name="buscarClave"/></td>
+                <td>
+                    <button type="submit" th:value="buscarClave" name="buscarClave">Buscar</button>
+                </td>
             </tr>
         </table>
+        <span th:text="*{personalCl}">personalCl</span><br/>
+        <span th:text="*{pagoFe}">pagoFe</span><br/>
+        <span th:text="*{personalMNo}">nombre</span><br/>
+        <span th:text="*{apePatXx}">paterno</span><br/>
+        <span th:text="*{apeMatXx}">materno</span><br/>
+        <span th:text="*{rfcXx}">rfc</span><br/>
+        <span th:text="*{contableNu}">numero contable</span><br/>
+        <input type="text" th:field="*{generaPago}"/><br/>
+        <input type="text" th:field="*{tieneRfc}"/><br/>
+        <input type="text" th:field="*{tieneHorarios}"/><br/>
+        <input type="text" th:field="*{tieneRetencion}"/><br/>
+        <input type="text" th:field="*{pagoProcesado}"/><br/>
+        <p><textarea th:field="*{observaciones}" placeholder="Observaciones"></textarea></p><br/>
+        <button type="submit" th:value = "actualizaDatos" name="actualizaDatos">Actualiza Datos</button>
     </form>
-</div>
-<div>
-<form action="#" th:action="@{/documentos/actualiza}" th:object="${pagosEntityEncontrado}" method="post">
-    <span th:text="${pagosEntityEncontrado.personalCl}">personalCl</span><br/>
-    <span th:text="${pagosEntityEncontrado.pagoFe}">pagoFe</span><br/>
-    <span th:text="${pagosEntityEncontrado.personalMNo}">nombre</span><br/>
-    <span th:text="${pagosEntityEncontrado.apePatXx}">paterno</span><br/>
-    <span th:text="${pagosEntityEncontrado.apeMatXx}">materno</span><br/>
-    <span th:text="${pagosEntityEncontrado.rfcXx}">rfc</span><br/>
-    <span th:text="${pagosEntityEncontrado.contableNu}">numero contable</span><br/>
-    <input type="text" th:field="${pagosEntityEncontrado.generaPago}"/><br/>
-    <input type="text" th:field="${pagosEntityEncontrado.tieneRfc}"/><br/>
-    <input type="text" th:field="${pagosEntityEncontrado.tieneHorarios}"/><br/>
-    <input type="text" th:field="${pagosEntityEncontrado.tieneRetencion}"/><br/>
-    <input type="text" th:field="${pagosEntityEncontrado.pagoProcesado}"/><br/>
-    <p><textarea th:field="${pagosEntityEncontrado.observaciones}" placeholder="Observaciones"></textarea></p><br/>
-    <input type="submit" name="actualizaDatos" value="Actualizar"/>
-
-</form>
 </div>
 <footer th:replace="layout :: site-footer"/>
 </body>
