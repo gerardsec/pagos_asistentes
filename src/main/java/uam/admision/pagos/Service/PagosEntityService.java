@@ -62,6 +62,10 @@ public class PagosEntityService {
         pagosEntityActualizar.setTieneRetencion(pagosEntity.getTieneRetencion());
         pagosEntityActualizar.setPagoProcesado(pagosEntity.getPagoProcesado());
         pagosEntityActualizar.setObservaciones(pagosEntity.getObservaciones());
+        pagosEntityActualizar.setEntregaRfcFe(pagosEntity.getEntregaRfcFe());
+        pagosEntityActualizar.setCausaError(pagosEntity.getCausaError());
+        log.warn(">>antes de actualizar:"+pagosEntity.toString());
+        log.warn("Después de actualizar:"+pagosEntityActualizar.toString());
         return Boolean.TRUE;
 
     }

@@ -26,8 +26,8 @@ import java.util.List;
 @Controller
 public class PagosEntradaController {
     private static final Logger log = LoggerFactory.getLogger(PagosEntradaController.class);
-    //private static String UPLOADED_FOLDER = "/Users/uamadm01/Data/files_sendmail/";
-    private static String UPLOADED_FOLDER = "/Users/gerardsec/Documents/temporales/files_sendmail";
+    private static String UPLOADED_FOLDER = "/Users/uamadm01/Data/files_sendmail/";
+    //private static String UPLOADED_FOLDER = "/Users/gerardsec/Documents/temporales/files_sendmail/";
 
     String fileName;
 

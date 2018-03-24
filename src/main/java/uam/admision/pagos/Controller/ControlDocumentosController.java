@@ -59,16 +59,15 @@ public class ControlDocumentosController {
         Optional<PagosEntity> optionalPagosEntity = pagosEntityService.buscaPorId(corteClaveBuscar);
         if (!optionalPagosEntity.isPresent()) {
             mensaje = "No se encontró información";
-            log.warn("NO encontrado");
+            log.warn("NO se encuentran datos");
+            model.addAttribute("mensaje",mensaje);
             return "actualizaPersona";
         }
-        mensaje = "SE encontró!!";
-        log.warn("encontrado");
+        mensaje = "Si modifica datos no olvide Actualizar";
+        //log.warn("encontrado");
+        model.addAttribute("mensaje",mensaje);
         BeanUtils.copyProperties(optionalPagosEntity.get(), pagosEntity);
-        //BeanUtils.copyProperties(optionalPagosEntity.get(), pagosEntityEncontrado);
-        System.out.println(optionalPagosEntity.get().toString());
-        //System.out.println(pagosEntityEncontrado.toString());
-        //model.addObject("mensaje", mensaje);
+        //System.out.println(optionalPagosEntity.get().toString());
         return "actualizaPersona";
     }
 
@@ -76,11 +75,13 @@ public class ControlDocumentosController {
     public String actualizarDatos(final @Valid @ModelAttribute("pagosEntity") PagosEntity pagosEntity,
                                   final BindingResult bindingResult,
                                   final ModelMap model) {
+        String mensaje = "";
         if (bindingResult.hasErrors()) {
             log.warn("Errores en forma actualizar");
+            mensaje = "Datos incorrectos";
+            model.addAttribute("mensaje",mensaje);
             return "actualizaPersona";
         }
-        String mensaje = "Solicitando actualizar";
         log.warn("solicitando actualizar");
         try {
             Boolean procesaActualizacion = pagosEntityService.actualizaPagos(pagosEntity);
@@ -88,11 +89,13 @@ public class ControlDocumentosController {
                 log.warn("Actualización ok");
             } else {
                 log.warn("No se procesó actualización");
+                mensaje = "Errores al actualizar! Reportar";
             }
         } catch (PagosEntityTransactionException e) {
             log.warn("Error al actualizar");
         }
         model.clear();
+        model.addAttribute("mensaje",mensaje);
         return "redirect:/documentos/registra";
     }
 }

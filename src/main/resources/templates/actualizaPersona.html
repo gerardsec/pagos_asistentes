@@ -7,8 +7,8 @@
 </head>
 <body>
 <header th:replace="layout :: site-header"/>
-<div th:if="${message}">
-    <h2 th:text="${message}"/>
+<div th:if="${mensaje}">
+    <h2 th:text="${mensaje}"/>
 </div>
 <div>
     <form action="#" th:action="@{/documentos/registra}" th:object="${pagosEntity}" method="post">
@@ -34,18 +34,20 @@
                 </td>
             </tr>
         </table>
-        <span th:text="*{personalCl}">personalCl</span><br/>
-        <span th:text="*{pagoFe}">pagoFe</span><br/>
-        <span th:text="*{personalMNo}">nombre</span><br/>
-        <span th:text="*{apePatXx}">paterno</span><br/>
-        <span th:text="*{apeMatXx}">materno</span><br/>
-        <span th:text="*{rfcXx}">rfc</span><br/>
-        <span th:text="*{contableNu}">numero contable</span><br/>
-        <input type="text" th:field="*{generaPago}"/><br/>
-        <input type="text" th:field="*{tieneRfc}"/><br/>
-        <input type="text" th:field="*{tieneHorarios}"/><br/>
-        <input type="text" th:field="*{tieneRetencion}"/><br/>
-        <input type="text" th:field="*{pagoProcesado}"/><br/>
+        <span>Clave de personal: </span><span th:text="*{personalCl}">personalCl</span><br/>
+        <span>Corte: </span><span th:text="*{pagoFe}">pagoFe</span><br/>
+        <span>Nombre: </span><span th:text="*{personalMNo}">nombre</span><br/>
+        <span>Paterno: </span><span th:text="*{apePatXx}">paterno</span><br/>
+        <span>Materno: </span><span th:text="*{apeMatXx}">materno</span><br/>
+        <span>RFC: </span><span th:text="*{rfcXx}">rfc</span><br/>
+        <span>Número contable: </span><span th:text="*{contableNu}">numero contable</span><br/>
+        <span>¿Tiene RFC? (fecha en que entrega?: </span><input type="checkbox" th:field="*{tieneRfc}" value="1"/>
+               <input type="date" th:field="*{entregaRfcFe}" />  <br/>
+        <span>¿Tiene horarios?: </span><input type="checkbox" th:field="*{tieneHorarios}" value="1"/><br/>
+        <span>¿Tienen retención?: </span><input type="checkbox" th:field="*{tieneRetencion}" value="1"/><br/>
+        <span>¡Errores!: </span><input type="checkbox" th:field="*{causaError}" value="1"/><br/>
+        <span>¿Debe generarse pago?: </span><input type="checkbox" th:field="*{generaPago}" value="1"/><br/>
+        <span>¿Se procesó el pago?: </span><input type="checkbox" th:field="*{pagoProcesado}" value="1"/><br/>
         <p><textarea th:field="*{observaciones}" placeholder="Observaciones"></textarea></p><br/>
         <button type="submit" th:value = "actualizaDatos" name="actualizaDatos">Actualiza Datos</button>
     </form>

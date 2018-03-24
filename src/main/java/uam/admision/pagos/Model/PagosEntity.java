@@ -15,6 +15,8 @@ import uam.admision.pagos.Utils.LocalDateTimeConverter;
 @Table(name = "pagos", schema = "controlpagos", catalog = "")
 @IdClass(PagosEntityPK.class)
 public class PagosEntity {
+
+
     private String personalCl;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate pagoFe;
@@ -54,7 +56,13 @@ public class PagosEntity {
     private Float pagoCantExtra;
     private Float pagoCantTotal;
     private Integer generaPago;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate generaPagoFe;
     private Integer tieneRfc;
+
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate entregaRfcFe;
     private Integer tieneHorarios;
     private Integer tieneRetencion;
     private Integer pagoProcesado;
@@ -479,52 +487,82 @@ public class PagosEntity {
         this.causaError = causaError;
     }
 
+    @Basic
+    @Column(name = "genera_pago_fe", nullable = true)
+    @Convert(converter = LocalDateTimeConverter.class)
+    public LocalDate getGeneraPagoFe() {
+        return generaPagoFe;
+    }
+
+    public void setGeneraPagoFe(LocalDate generaPagoFe) {
+        this.generaPagoFe = generaPagoFe;
+    }
+
+    @Basic
+    @Column(name = "entrega_rfc_fe", nullable = true)
+    @Convert(converter = LocalDateTimeConverter.class)
+    public LocalDate getEntregaRfcFe() {
+        return entregaRfcFe;
+    }
+
+    public void setEntregaRfcFe(LocalDate entregaRfcFe) {
+        this.entregaRfcFe = entregaRfcFe;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PagosEntity that = (PagosEntity) o;
-        return Objects.equals(personalCl, that.personalCl) &&
-                Objects.equals(pagoFe, that.pagoFe) &&
-                Objects.equals(montoPagoNu, that.montoPagoNu) &&
-                Objects.equals(diasPagoNu, that.diasPagoNu) &&
-                Objects.equals(festivosNu, that.festivosNu) &&
-                Objects.equals(horasPagoNu, that.horasPagoNu) &&
-                Objects.equals(horasDobleNu, that.horasDobleNu) &&
-                Objects.equals(perPagoCl, that.perPagoCl) &&
-                Objects.equals(iniPagoFe, that.iniPagoFe) &&
-                Objects.equals(finPagoFe, that.finPagoFe) &&
-                Objects.equals(apePatXx, that.apePatXx) &&
-                Objects.equals(apeMatXx, that.apeMatXx) &&
-                Objects.equals(personalMNo, that.personalMNo) &&
-                Objects.equals(rfcXx, that.rfcXx) &&
-                Objects.equals(contableNu, that.contableNu) &&
-                Objects.equals(jornadaMin, that.jornadaMin) &&
-                Objects.equals(jornadaMax, that.jornadaMax) &&
-                Objects.equals(plazaCl1, that.plazaCl1) &&
-                Objects.equals(plazaCl2, that.plazaCl2) &&
-                Objects.equals(categoria1, that.categoria1) &&
-                Objects.equals(categoria2, that.categoria2) &&
-                Objects.equals(puesto1, that.puesto1) &&
-                Objects.equals(puesto2, that.puesto2) &&
-                Objects.equals(plantel1, that.plantel1) &&
-                Objects.equals(plantel2, that.plantel2) &&
-                Objects.equals(diasEquivalentes, that.diasEquivalentes) &&
-                Objects.equals(categoriaPago, that.categoriaPago) &&
-                Objects.equals(diasPagarNu, that.diasPagarNu) &&
-                Objects.equals(diferenciaNu, that.diferenciaNu) &&
-                Objects.equals(extrasAutorizadas, that.extrasAutorizadas) &&
-                Objects.equals(pagoCantDias, that.pagoCantDias) &&
-                Objects.equals(pagoCantExtra, that.pagoCantExtra) &&
-                Objects.equals(pagoCantTotal, that.pagoCantTotal) &&
-                Objects.equals(generaPago, that.generaPago) &&
-                Objects.equals(tieneRfc, that.tieneRfc) &&
-                Objects.equals(tieneHorarios, that.tieneHorarios) &&
-                Objects.equals(tieneRetencion, that.tieneRetencion) &&
-                Objects.equals(pagoProcesado, that.pagoProcesado) &&
-                Objects.equals(pagoGenerado, that.pagoGenerado) &&
-                Objects.equals(observaciones, that.observaciones) &&
-                Objects.equals(causaError, that.causaError);
+        return Objects.equals(getPersonalCl(), that.getPersonalCl()) &&
+                Objects.equals(getPagoFe(), that.getPagoFe()) &&
+                Objects.equals(getMontoPagoNu(), that.getMontoPagoNu()) &&
+                Objects.equals(getDiasPagoNu(), that.getDiasPagoNu()) &&
+                Objects.equals(getFestivosNu(), that.getFestivosNu()) &&
+                Objects.equals(getHorasPagoNu(), that.getHorasPagoNu()) &&
+                Objects.equals(getHorasDobleNu(), that.getHorasDobleNu()) &&
+                Objects.equals(getPerPagoCl(), that.getPerPagoCl()) &&
+                Objects.equals(getIniPagoFe(), that.getIniPagoFe()) &&
+                Objects.equals(getFinPagoFe(), that.getFinPagoFe()) &&
+                Objects.equals(getApePatXx(), that.getApePatXx()) &&
+                Objects.equals(getApeMatXx(), that.getApeMatXx()) &&
+                Objects.equals(getPersonalMNo(), that.getPersonalMNo()) &&
+                Objects.equals(getRfcXx(), that.getRfcXx()) &&
+                Objects.equals(getContableNu(), that.getContableNu()) &&
+                Objects.equals(getJornadaMin(), that.getJornadaMin()) &&
+                Objects.equals(getJornadaMax(), that.getJornadaMax()) &&
+                Objects.equals(getPlazaCl1(), that.getPlazaCl1()) &&
+                Objects.equals(getPlazaCl2(), that.getPlazaCl2()) &&
+                Objects.equals(getCategoria1(), that.getCategoria1()) &&
+                Objects.equals(getCategoria2(), that.getCategoria2()) &&
+                Objects.equals(getPuesto1(), that.getPuesto1()) &&
+                Objects.equals(getPuesto2(), that.getPuesto2()) &&
+                Objects.equals(getPlantel1(), that.getPlantel1()) &&
+                Objects.equals(getPlantel2(), that.getPlantel2()) &&
+                Objects.equals(getDiasEquivalentes(), that.getDiasEquivalentes()) &&
+                Objects.equals(getCategoriaPago(), that.getCategoriaPago()) &&
+                Objects.equals(getDiasPagarNu(), that.getDiasPagarNu()) &&
+                Objects.equals(getDiferenciaNu(), that.getDiferenciaNu()) &&
+                Objects.equals(getExtrasAutorizadas(), that.getExtrasAutorizadas()) &&
+                Objects.equals(getPagoCantDias(), that.getPagoCantDias()) &&
+                Objects.equals(getPagoCantExtra(), that.getPagoCantExtra()) &&
+                Objects.equals(getPagoCantTotal(), that.getPagoCantTotal()) &&
+                Objects.equals(getGeneraPago(), that.getGeneraPago()) &&
+                Objects.equals(getGeneraPagoFe(), that.getGeneraPagoFe()) &&
+                Objects.equals(getTieneRfc(), that.getTieneRfc()) &&
+                Objects.equals(getEntregaRfcFe(), that.getEntregaRfcFe()) &&
+                Objects.equals(getTieneHorarios(), that.getTieneHorarios()) &&
+                Objects.equals(getTieneRetencion(), that.getTieneRetencion()) &&
+                Objects.equals(getPagoProcesado(), that.getPagoProcesado()) &&
+                Objects.equals(getPagoGenerado(), that.getPagoGenerado()) &&
+                Objects.equals(getObservaciones(), that.getObservaciones()) &&
+                Objects.equals(getCausaError(), that.getCausaError());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getPersonalCl(), getPagoFe(), getMontoPagoNu(), getDiasPagoNu(), getFestivosNu(), getHorasPagoNu(), getHorasDobleNu(), getPerPagoCl(), getIniPagoFe(), getFinPagoFe(), getApePatXx(), getApeMatXx(), getPersonalMNo(), getRfcXx(), getContableNu(), getJornadaMin(), getJornadaMax(), getPlazaCl1(), getPlazaCl2(), getCategoria1(), getCategoria2(), getPuesto1(), getPuesto2(), getPlantel1(), getPlantel2(), getDiasEquivalentes(), getCategoriaPago(), getDiasPagarNu(), getDiferenciaNu(), getExtrasAutorizadas(), getPagoCantDias(), getPagoCantExtra(), getPagoCantTotal(), getGeneraPago(), getGeneraPagoFe(), getTieneRfc(), getEntregaRfcFe(), getTieneHorarios(), getTieneRetencion(), getPagoProcesado(), getPagoGenerado(), getObservaciones(), getCausaError());
     }
 
     @Override
@@ -564,17 +602,15 @@ public class PagosEntity {
                 ", pagoCantExtra=" + pagoCantExtra +
                 ", pagoCantTotal=" + pagoCantTotal +
                 ", generaPago=" + generaPago +
+                ", generaPagoFe=" + generaPagoFe +
                 ", tieneRfc=" + tieneRfc +
+                ", entregaRfcFe=" + entregaRfcFe +
                 ", tieneHorarios=" + tieneHorarios +
                 ", tieneRetencion=" + tieneRetencion +
                 ", pagoProcesado=" + pagoProcesado +
                 ", pagoGenerado=" + pagoGenerado +
+                ", observaciones='" + observaciones + '\'' +
+                ", causaError='" + causaError + '\'' +
                 '}';
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(personalCl, pagoFe, montoPagoNu, diasPagoNu, festivosNu, horasPagoNu, horasDobleNu, perPagoCl, iniPagoFe, finPagoFe, apePatXx, apeMatXx, personalMNo, rfcXx, contableNu, jornadaMin, jornadaMax, plazaCl1, plazaCl2, categoria1, categoria2, puesto1, puesto2, plantel1, plantel2, diasEquivalentes, categoriaPago, diasPagarNu, diferenciaNu, extrasAutorizadas, pagoCantDias, pagoCantExtra, pagoCantTotal, generaPago, tieneRfc, tieneHorarios, tieneRetencion, pagoProcesado, pagoGenerado, observaciones, causaError);
     }
 }
