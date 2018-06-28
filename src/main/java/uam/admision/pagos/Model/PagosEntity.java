@@ -15,8 +15,6 @@ import uam.admision.pagos.Utils.LocalDateTimeConverter;
 @Table(name = "pagos", schema = "controlpagos", catalog = "")
 @IdClass(PagosEntityPK.class)
 public class PagosEntity {
-
-
     private String personalCl;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate pagoFe;
@@ -59,8 +57,6 @@ public class PagosEntity {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate generaPagoFe;
     private Integer tieneRfc;
-
-
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate entregaRfcFe;
     private Integer tieneHorarios;
@@ -69,6 +65,7 @@ public class PagosEntity {
     private Integer pagoGenerado;
     private String observaciones;
     private String causaError;
+    private String listaError;
 
     @Id
     @Column(name = "personal_cl", nullable = false, length = 45)
@@ -76,11 +73,9 @@ public class PagosEntity {
     public String getPersonalCl() {
         return personalCl;
     }
-
     public void setPersonalCl(String personalCl) {
         this.personalCl = personalCl;
     }
-
     @Id
     @Column(name = "pago_fe", nullable = false)
     @Convert(converter = LocalDateTimeConverter.class)
@@ -88,31 +83,25 @@ public class PagosEntity {
     public LocalDate getPagoFe() {
         return pagoFe;
     }
-
     public void setPagoFe(LocalDate pagoFe) {
         this.pagoFe = pagoFe;
     }
-
     @Basic
     @Column(name = "monto_pago_nu", nullable = true, precision = 2)
     public Float getMontoPagoNu() {
         return montoPagoNu;
     }
-
     public void setMontoPagoNu(Float montoPagoNu) {
         this.montoPagoNu = montoPagoNu;
     }
-
     @Basic
     @Column(name = "dias_pago_nu", nullable = true)
     public Integer getDiasPagoNu() {
         return diasPagoNu;
     }
-
     public void setDiasPagoNu(Integer diasPagoNu) {
         this.diasPagoNu = diasPagoNu;
     }
-
     @Basic
     @Column(name = "festivos_nu", nullable = true)
     public Integer getFestivosNu() {
@@ -509,6 +498,15 @@ public class PagosEntity {
         this.entregaRfcFe = entregaRfcFe;
     }
 
+    public String getListaError() {
+        return listaError;
+    }
+
+    public void setListaError(String listaError) {
+        this.listaError = listaError;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -556,61 +554,13 @@ public class PagosEntity {
                 Objects.equals(getPagoProcesado(), that.getPagoProcesado()) &&
                 Objects.equals(getPagoGenerado(), that.getPagoGenerado()) &&
                 Objects.equals(getObservaciones(), that.getObservaciones()) &&
-                Objects.equals(getCausaError(), that.getCausaError());
+                Objects.equals(getCausaError(), that.getCausaError()) &&
+                Objects.equals(getListaError(), that.getListaError());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getPersonalCl(), getPagoFe(), getMontoPagoNu(), getDiasPagoNu(), getFestivosNu(), getHorasPagoNu(), getHorasDobleNu(), getPerPagoCl(), getIniPagoFe(), getFinPagoFe(), getApePatXx(), getApeMatXx(), getPersonalMNo(), getRfcXx(), getContableNu(), getJornadaMin(), getJornadaMax(), getPlazaCl1(), getPlazaCl2(), getCategoria1(), getCategoria2(), getPuesto1(), getPuesto2(), getPlantel1(), getPlantel2(), getDiasEquivalentes(), getCategoriaPago(), getDiasPagarNu(), getDiferenciaNu(), getExtrasAutorizadas(), getPagoCantDias(), getPagoCantExtra(), getPagoCantTotal(), getGeneraPago(), getGeneraPagoFe(), getTieneRfc(), getEntregaRfcFe(), getTieneHorarios(), getTieneRetencion(), getPagoProcesado(), getPagoGenerado(), getObservaciones(), getCausaError());
-    }
-
-    @Override
-    public String toString() {
-        return "PagosEntity{" +
-                "personalCl='" + personalCl + '\'' +
-                ", pagoFe=" + pagoFe +
-                ", montoPagoNu=" + montoPagoNu +
-                ", diasPagoNu=" + diasPagoNu +
-                ", festivosNu=" + festivosNu +
-                ", horasPagoNu=" + horasPagoNu +
-                ", horasDobleNu=" + horasDobleNu +
-                ", perPagoCl=" + perPagoCl +
-                ", iniPagoFe=" + iniPagoFe +
-                ", finPagoFe=" + finPagoFe +
-                ", apePatXx='" + apePatXx + '\'' +
-                ", apeMatXx='" + apeMatXx + '\'' +
-                ", personalMNo='" + personalMNo + '\'' +
-                ", rfcXx='" + rfcXx + '\'' +
-                ", contableNu=" + contableNu +
-                ", jornadaMin=" + jornadaMin +
-                ", jornadaMax=" + jornadaMax +
-                ", plazaCl1=" + plazaCl1 +
-                ", plazaCl2=" + plazaCl2 +
-                ", categoria1=" + categoria1 +
-                ", categoria2=" + categoria2 +
-                ", puesto1='" + puesto1 + '\'' +
-                ", puesto2='" + puesto2 + '\'' +
-                ", plantel1='" + plantel1 + '\'' +
-                ", plantel2='" + plantel2 + '\'' +
-                ", diasEquivalentes=" + diasEquivalentes +
-                ", categoriaPago=" + categoriaPago +
-                ", diasPagarNu=" + diasPagarNu +
-                ", diferenciaNu=" + diferenciaNu +
-                ", extrasAutorizadas=" + extrasAutorizadas +
-                ", pagoCantDias=" + pagoCantDias +
-                ", pagoCantExtra=" + pagoCantExtra +
-                ", pagoCantTotal=" + pagoCantTotal +
-                ", generaPago=" + generaPago +
-                ", generaPagoFe=" + generaPagoFe +
-                ", tieneRfc=" + tieneRfc +
-                ", entregaRfcFe=" + entregaRfcFe +
-                ", tieneHorarios=" + tieneHorarios +
-                ", tieneRetencion=" + tieneRetencion +
-                ", pagoProcesado=" + pagoProcesado +
-                ", pagoGenerado=" + pagoGenerado +
-                ", observaciones='" + observaciones + '\'' +
-                ", causaError='" + causaError + '\'' +
-                '}';
+        return Objects.hash(getPersonalCl(), getPagoFe(), getMontoPagoNu(), getDiasPagoNu(), getFestivosNu(), getHorasPagoNu(), getHorasDobleNu(), getPerPagoCl(), getIniPagoFe(), getFinPagoFe(), getApePatXx(), getApeMatXx(), getPersonalMNo(), getRfcXx(), getContableNu(), getJornadaMin(), getJornadaMax(), getPlazaCl1(), getPlazaCl2(), getCategoria1(), getCategoria2(), getPuesto1(), getPuesto2(), getPlantel1(), getPlantel2(), getDiasEquivalentes(), getCategoriaPago(), getDiasPagarNu(), getDiferenciaNu(), getExtrasAutorizadas(), getPagoCantDias(), getPagoCantExtra(), getPagoCantTotal(), getGeneraPago(), getGeneraPagoFe(), getTieneRfc(), getEntregaRfcFe(), getTieneHorarios(), getTieneRetencion(), getPagoProcesado(), getPagoGenerado(), getObservaciones(), getCausaError(), getListaError());
     }
 }

@@ -13,6 +13,7 @@ import uam.admision.pagos.Model.PagosEntity;
 import uam.admision.pagos.Model.PagosEntityPK;
 import uam.admision.pagos.Service.PagosEntityService;
 import uam.admision.pagos.Service.PagosEntityTransactionException;
+import uam.admision.pagos.Utils.ArrayStringArray;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -23,21 +24,26 @@ public class ControlDocumentosController {
 
     private final static Logger log = LoggerFactory.getLogger(ControlDocumentosController.class);
 
-
     @Autowired
     private PagosEntityService pagosEntityService;
+
+    @ModelAttribute("causasErrorAllValues")
+    public String[] getCausasErrorAllValues() {
+        return new String[] {
+                "Monday", "Tuesday", "Wednesday", "Thursday",
+                "Friday", "Saturday", "Sunday"
+        };
+    }
 
     @RequestMapping(value = "/documentos/registra")
     public String registraDocumentos(final @ModelAttribute("pagosEntity") PagosEntity pagosEntity,
                                      final ModelMap model) {
-
         LocalDate fechaDefault = LocalDate.now();
         Integer claveInicial = 0;
         pagosEntity.setPersonalCl("");
-
-        //model.addObject("fechaCorteBuscar", fechaDefault);
-        //model.addObject("personaClaveBuscar", claveInicial);
-
+        String[] listaErroresArray = new String[] {""};
+        System.out.println(listaErroresArray.toString());
+        model.addAttribute("erroresSelected", listaErroresArray);
         return "actualizaPersona";
     }
 
@@ -52,7 +58,6 @@ public class ControlDocumentosController {
         }
         //Forma clave a buscar
         PagosEntityPK corteClaveBuscar = new PagosEntityPK();
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         corteClaveBuscar.setPagoFe(pagosEntity.getPagoFe());
         corteClaveBuscar.setPersonalCl(pagosEntity.getPersonalCl());
         log.warn("Clavecorte a buscar:" + corteClaveBuscar.getPersonalCl() + ">>" + corteClaveBuscar.getPagoFe());
@@ -60,14 +65,15 @@ public class ControlDocumentosController {
         if (!optionalPagosEntity.isPresent()) {
             mensaje = "No se encontró información";
             log.warn("NO se encuentran datos");
-            model.addAttribute("mensaje",mensaje);
+            model.addAttribute("mensaje", mensaje);
             return "actualizaPersona";
         }
         mensaje = "Si modifica datos no olvide Actualizar";
-        //log.warn("encontrado");
-        model.addAttribute("mensaje",mensaje);
+        model.addAttribute("mensaje", mensaje);
         BeanUtils.copyProperties(optionalPagosEntity.get(), pagosEntity);
-        //System.out.println(optionalPagosEntity.get().toString());
+        ArrayStringArray tempo = new ArrayStringArray();
+        String[] listaErroresArray = tempo.StrintToStringArray(pagosEntity.getListaError());
+        model.addAttribute("erroresSelected", listaErroresArray);
         return "actualizaPersona";
     }
 
@@ -79,7 +85,7 @@ public class ControlDocumentosController {
         if (bindingResult.hasErrors()) {
             log.warn("Errores en forma actualizar");
             mensaje = "Datos incorrectos";
-            model.addAttribute("mensaje",mensaje);
+            model.addAttribute("mensaje", mensaje);
             return "actualizaPersona";
         }
         log.warn("solicitando actualizar");
@@ -95,7 +101,7 @@ public class ControlDocumentosController {
             log.warn("Error al actualizar");
         }
         model.clear();
-        model.addAttribute("mensaje",mensaje);
+        model.addAttribute("mensaje", mensaje);
         return "redirect:/documentos/registra";
     }
 }

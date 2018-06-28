@@ -49,6 +49,20 @@
         <span>¿Debe generarse pago?: </span><input type="checkbox" th:field="*{generaPago}" value="1"/><br/>
         <span>¿Se procesó el pago?: </span><input type="checkbox" th:field="*{pagoProcesado}" value="1"/><br/>
         <p><textarea th:field="*{observaciones}" placeholder="Observaciones"></textarea></p><br/>
+        <!--
+        <span>lista errores</span><input type="text" th:field="*{listaError}"/><br/>
+        -->
+        <ul>
+            <li th:each="checkboxValue: ${causasErrorAllValues}">
+                <input type="checkbox"
+                       th:field="${erroresSelected}"
+                       th:value="${checkboxValue}"
+                       checked='checked'/>
+                <label
+                        th:for="${#ids.prev('erroresSelected')}"
+                        th:text="${checkboxValue}">algo</label>
+            </li>
+        </ul>
         <button type="submit" th:value = "actualizaDatos" name="actualizaDatos">Actualiza Datos</button>
     </form>
 </div>
